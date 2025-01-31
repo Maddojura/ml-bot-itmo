@@ -1,22 +1,21 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  fastapi-service:
+  ml-bot:
     build: .
-    container_name: fastapi-baseline
     ports:
-      - "8080:8080"
-    restart: unless-stopped
+      - "8000:8000"
     environment:
-      - TZ=UTC
+      - SEARCH_API_KEY=${SEARCH_API_KEY}
+      - SEARCH_ENGINE_ID=${SEARCH_ENGINE_ID}
+      - GPT_API_KEY=${GPT_API_KEY}
     volumes:
+      - ./data:/app/data
       - ./logs:/app/logs
-    # Если нужно GPU
-    # runtime: nvidia
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
+
+  chromadb:
+    image: chromadb/chroma
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data/chroma:/chroma
