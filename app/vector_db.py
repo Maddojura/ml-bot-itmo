@@ -5,10 +5,7 @@ import json
 
 class VectorDB:
     def __init__(self):
-        self.client = chromadb.Client(Settings(
-            chroma_db_impl="duckdb+parquet",
-            persist_directory="data/chroma"
-        ))
+        self.client = chromadb.PersistentClient(path="data/chroma")
         self.collection = self.client.get_or_create_collection(name="itmo_knowledge")
         self.load_data()
 

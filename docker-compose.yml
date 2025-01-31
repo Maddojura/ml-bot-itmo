@@ -3,12 +3,10 @@ version: '3.8'
 services:
   ml-bot:
     build: .
+    env_file:
+      - .env
     ports:
       - "8000:8000"
-    environment:
-      - SEARCH_API_KEY=${SEARCH_API_KEY}
-      - SEARCH_ENGINE_ID=${SEARCH_ENGINE_ID}
-      - GPT_API_KEY=${GPT_API_KEY}
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs

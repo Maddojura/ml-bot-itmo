@@ -5,7 +5,7 @@ load_dotenv()
 
 class Config:
     SEARCH_API_KEY = os.getenv("SEARCH_API_KEY")
-    SEARCH_ENGINE_ID = os.getenv("SEARCH_ENGINE_ID")
+    SEARCH_FOLDER_ID = os.getenv("SEARCH_FOLDER_ID")
     GPT_API_KEY = os.getenv("GPT_API_KEY")
     NEWS_URL = "https://news.itmo.ru/ru/rss/"
     MODEL_NAME = "Yandex GPT"
