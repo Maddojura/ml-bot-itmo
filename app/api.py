@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from app.processing import process_query
-from .utils.logger import setup_logging
+from app.utils.logger import get_logger
 from fastapi.security import OAuth2PasswordBearer
+from app.utils.logger import get_logger
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth")
@@ -15,10 +16,11 @@ class QueryResponse(BaseModel):
     id: int
     answer: int | None
     reasoning: str
-    sources: list[str]
+    sources: str
 
 @router.post("/api/request")
 async def handle_request(request: QueryRequest) -> QueryResponse:
+    logger = await get_logger()
     try:
         response_data = await process_query(request.query, request.id)
         return QueryResponse(**response_data)

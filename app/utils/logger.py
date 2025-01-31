@@ -1,13 +1,10 @@
 import sys
-
 from aiologger import Logger
 from aiologger.formatters.base import Formatter
-from aiologger.handlers.files import AsyncFileHandler
 from aiologger.handlers.streams import AsyncStreamHandler
 from aiologger.levels import LogLevel
 
-
-async def setup_logger():
+async def get_logger():
     # Create logger instance
     logger = Logger(name="api_logger")
 
@@ -18,17 +15,11 @@ async def setup_logger():
         style="{",
     )
 
-    file_handler = AsyncFileHandler(
-        filename="logs/api.log",
-        mode="a",
-        encoding="utf-8",
-    )
+    # Stream handler (stdout)
     stream_handler = AsyncStreamHandler(stream=sys.stdout)
-    file_handler.formatter = formatter
     stream_handler.formatter = formatter
-    logger.add_handler(file_handler)
-    logger.add_handler(stream_handler)
 
+    logger.add_handler(stream_handler)  
     logger.level = LogLevel.INFO
 
     return logger
